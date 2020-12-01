@@ -59,11 +59,13 @@ public class LoginPane extends VBox {
 				}
 			}
 			
+			System.out.println("Login code: " + loginCode);
+			
 			switch(loginCode) {
 			case INVALID_ID - 1:
 				switchSubtitle(INVALID_ID);
 				break;
-			case SUCCESS - 1:
+			case SUCCESS - 2:
 				UserCache.setCurrentUser(username);
 				UserCache.updateUserList();
 				

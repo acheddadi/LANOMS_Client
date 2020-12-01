@@ -58,10 +58,10 @@ public class GlobalPane extends AnchorPane {
 		AnchorPane.setRightAnchor(descriptionPane, 0.0);
 		
 		// Test user cache
-		testUserCache();
+		//testUserCache();
 		
 		// Test conversation cache
-		testConversationCache();
+		//testConversationCache();
 		
 		// Setup first screen
 		setSelection(INBOX);

@@ -1,6 +1,5 @@
 import javafx.application.*;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 public class ClientDriver extends Application {
