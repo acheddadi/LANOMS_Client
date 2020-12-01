@@ -50,6 +50,7 @@ public class DescriptionPane extends AnchorPane {
 	
 	public void setChatLog(Conversation conversation) {
 		chatLog.setConversation(conversation);
+		chatInput.setConversationIndex(conversation.getIndex());
 	}
 	
 	private void getBlank() {

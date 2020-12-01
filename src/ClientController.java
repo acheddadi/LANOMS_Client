@@ -70,20 +70,16 @@ public abstract class ClientController {
 	
 	public static void login(String userName, String password) {
 	      try {
-	          SocketClient.send("USER_AUTH", userName +"\n"+password);
+	          SocketClient.send("USER_AUTH", userName + "\n"+ password);
 	        } 
 	        catch (IOException e) {
 	          e.printStackTrace();
 	        }
 	  }
 
-  public static void makeMessage(){
-    MakeMessage message = new MakeMessage();
-    message.setUsername("ali");
-    message.setMessgae("HI This is demo message");
-    message.setId(0);
+  public static void makeMessage(String username, int id, String message){
     try {
-      SocketClient.send("MAKE_MESSAGE", Utility.fromMessage(message));
+      SocketClient.send("MAKE_MESSAGE", username + "\n" + id + "\n" + message);
     } 
     catch (IOException e) {
       e.printStackTrace();
