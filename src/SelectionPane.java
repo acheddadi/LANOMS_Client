@@ -61,13 +61,11 @@ public class SelectionPane extends AnchorPane {
 	
 	private void getInbox() {
 		Conversation[] conversationList = ConversationCache.getConversations();
-		System.out.println("There are " + conversationList.length + " conversations.");
 		icons = new RadioButton[conversationList.length];
 		
 		for (int i = 0; i < icons.length; i++) {
 			// Get rid of main user from list of participants
 			User[] temp = conversationList[i].getParticipants();
-			System.out.println("There are " + temp.length + " participants.");
 			
 			User[] users = new User[temp.length - 1];
 			for (int j = 0, k = 0; j < temp.length; j++) {
