@@ -66,7 +66,7 @@ public abstract class ClientController {
 	
 	public static void login(String userName, String password) {
 	      try {
-	          SocketClient.send("USER_AUTH", userName +"#"+password);
+	          SocketClient.send("USER_AUTH", userName +"\n"+password);
 	        } 
 	        catch (IOException e) {
 	          e.printStackTrace();
