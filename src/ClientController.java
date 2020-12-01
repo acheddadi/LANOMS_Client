@@ -107,10 +107,14 @@ public abstract class ClientController {
             break;
         case "CONV_COUNT":
         	
-            
+            break;
         case "GET_MSG":
         	
-       break;
+        	break;
+        	
+        case "MSG_COUNT":
+        	
+        	break;
         default:
           System.out.println("Key: " + data.getKey() + " Value: " + data.getData());
           return;
