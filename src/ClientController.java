@@ -105,8 +105,11 @@ public abstract class ClientController {
         case "USER_AUTH":
             LoginPane.setLoginCode(Utility.convertToInt(data.getData()));
             break;
+        case "CONV_COUNT":
+        	
+            
         case "GET_MSG":
-        	setUserInfo(data.getData());
+        	
        break;
         default:
           System.out.println("Key: " + data.getKey() + " Value: " + data.getData());
