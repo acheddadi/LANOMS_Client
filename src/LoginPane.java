@@ -79,6 +79,18 @@ public class LoginPane extends VBox {
 					}
 				}
 				
+				ConversationCache.updateConversations();
+				
+				while (!ConversationCache.isInitialized()) {
+					if (System.currentTimeMillis() - startTime > 3000) 
+						throw new RuntimeException("LoginThread timedout.");
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				
 				followUpStage.show();
 				break;
 				

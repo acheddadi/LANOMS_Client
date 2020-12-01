@@ -25,7 +25,7 @@ public abstract class ClientController {
     return null;
   }
 
-  public static void getConversationCount(int user) {
+  public static void getConversationCount(String user) {
     try {
       SocketClient.send("CONV_COUNT", user +"");
     } 
@@ -34,9 +34,9 @@ public abstract class ClientController {
     }
   }
 
-  public static void getMessageCount(int i, int j) {
+  public static void getMessageCount(String user, int j) {
     try {
-      SocketClient.send("MSG_COUNT", i +"#"+j);
+      SocketClient.send("MSG_COUNT", user +"\n" + j);
     } 
     catch (IOException e) {
       e.printStackTrace();

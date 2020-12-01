@@ -137,7 +137,7 @@ public class GlobalPane extends AnchorPane {
 			
 			ConversationCache.addConversation(conversations[i]);
 		}
-	} */
+	}
 	
 	// Old stub
 	public void testUserCache() {
@@ -166,5 +166,5 @@ public class GlobalPane extends AnchorPane {
 		convo02.addMessage(UserCache.getUser("Shreejan Paudel"), "you have five seconds to comply before I annihilate you");
 		
 		ConversationCache.addConversation(convo02);
-	}
+	} */
 }

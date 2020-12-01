@@ -26,16 +26,11 @@ public abstract class UserCache {
 		@Override
 		public void run() {
 			final int USERNAME = 0, NAME = 1, PROFILE = 2, STATUS = 3, DEPARTMENT = 4, EMAIL = 5;
-			initializeVariables();
-			
-			// Request ClientController to update userCount.
+			userCount = -1;
 			ClientController.getUserCount();
-			// Start our timeout timer.
+
 			long startTime = System.currentTimeMillis();
-			
-			// Wait for userCount to be updated but ClientController.
 			while (userCount == -1) {
-				// Timeout after 10 seconds.
 				if (System.currentTimeMillis() - startTime > 3000) 
 					throw new RuntimeException("UserCacheThread timedout.");
 				try {
@@ -45,18 +40,13 @@ public abstract class UserCache {
 				}
 			}
 			
-			// Initialize user buffer.
 			User[] toAdd = new User[userCount];
-			
-			// Get user info of all users, according to userCount.
 			for (int i = 0; i < userCount; i++) {
-				// Request ClientController to update userInfo.
+				
+				userInfo = null;
 				ClientController.getUserInfo(i);
 				
-				// Start our timeout timer.
 				startTime = System.currentTimeMillis();
-				
-				// Wait for userInfo to be updated by ClientController.
 				while (userInfo == null) {
 					if (System.currentTimeMillis() - startTime > 3000) 
 						throw new RuntimeException("UserCacheThread timedout.");
@@ -66,12 +56,14 @@ public abstract class UserCache {
 						e.printStackTrace();
 					}
 				}
-				// Split user info into separate strings.
+
 				String[] splitUserInfo = userInfo.split("\n");
 				userInfo = null;
 				
 				// Request ClientController to update userDisplayPicture.
-				/*ClientController.getUserDisplayPicture(i);
+				/*
+				 userDisplayPicture = null;
+				 ClientController.getUserDisplayPicture(i);
 				
 				// Start our timeout timer.
 				startTime = System.currentTimeMillis();
@@ -93,7 +85,6 @@ public abstract class UserCache {
 				// Stub
 				Image picture = new Image("user_placeholder.png");
 				
-				// Add user to buffer.
 				toAdd[i] = new User(
 						splitUserInfo[USERNAME],
 						splitUserInfo[NAME],
@@ -103,30 +94,17 @@ public abstract class UserCache {
 						splitUserInfo[EMAIL],
 						picture);
 			}
-			// Clear user list.
+
 			UserCache.clearUsers();
-			// Transfer users from buffer to user cache.
 			for(User user: toAdd) {
 				System.out.println("Adding " + user.getName());
 				userList.add(user);
 			}
 			
-			// Reset our variables for next time.
-			initializeVariables();
-			
-			// Release lock
-			semaphore.release();
-			
-			// Update selection
 			GlobalPane.updateSelection();
+			semaphore.release();
 		}
 		
-	}
-	
-	private static void initializeVariables() {
-		userCount = -1;
-		userInfo = null;
-		userDisplayPicture = null;
 	}
 	
 	public static void updateUserList() {
