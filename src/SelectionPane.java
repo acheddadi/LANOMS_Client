@@ -63,9 +63,12 @@ public class SelectionPane extends AnchorPane {
 		Conversation[] conversationList = ConversationCache.getConversations();
 		System.out.println("There are " + conversationList.length + " conversations.");
 		icons = new RadioButton[conversationList.length];
+		
 		for (int i = 0; i < icons.length; i++) {
 			// Get rid of main user from list of participants
 			User[] temp = conversationList[i].getParticipants();
+			System.out.println("There are " + temp.length + " participants.");
+			
 			User[] users = new User[temp.length - 1];
 			for (int j = 0, k = 0; j < temp.length; j++) {
 				if (!UserCache.isCurrentUser((temp[j]))) {
@@ -77,7 +80,8 @@ public class SelectionPane extends AnchorPane {
 			// Create name tags
 			String name = new String(" ");
 			for (int j = 0; j < users.length; j++) {
-				name += users[j].getName().substring(0, users[j].getName().indexOf(" "));
+				//name += users[j].getName().substring(0, users[j].getName().indexOf(" "));
+				name += users[j].getName();
 				if (j < users.length - 1) name += ", ";
 			}
 			

@@ -72,8 +72,8 @@ public abstract class ConversationCache {
 							e.printStackTrace();
 						}
 					}
-					
 					String[] splitMessage = message.split("\n");
+					System.out.println("User being passed: " + splitMessage[NAME]);
 					conversationBuffer[i].addMessage(UserCache.getUser(splitMessage[NAME]), splitMessage[MESSAGE]);
 				}
 				

@@ -151,10 +151,10 @@ public abstract class UserCache {
 		userList.clear();
 	}
 	
-	public static User getUser(String name) {
+	public static User getUser(String username) {
 		User toReturn = null;
 		for(User user: userList)
-			if (user.getName().equals(name)) toReturn = user;
+			if (user.getUsername().equals(username)) toReturn = user;
 		
 		return toReturn;
 	}

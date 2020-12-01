@@ -12,6 +12,9 @@ public class Conversation {
 	}
 	
 	public void addMessage(User user, String message) {
+		System.out.println("Message: " + message);
+		System.out.println("From: " + user.getName());
+		
 		if (!participants.contains(user))participants.add(user);
 		conversation.add(new Message(user, message));
 	}
