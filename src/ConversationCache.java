@@ -60,7 +60,7 @@ public abstract class ConversationCache {
 				for (int j = 0; j < messageCount; j++) {
 					
 					message = null;
-					ClientController.getMessage(i, j);
+					ClientController.getMessage(UserCache.getCurrentUser(), i, j);
 					
 					startTime = System.currentTimeMillis();
 					while(message == null) {
