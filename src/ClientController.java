@@ -62,11 +62,11 @@ public abstract class ClientController {
     UserCache.setUserInfo(data);
   }
   
-	// Authentication stub
+	/*// Authentication stub
 	public static int authenticateUser(String username, String password) {
 		// TODO Auto-generated method stub
 		return !username.isBlank() && !password.isBlank() ? 3 : 1;
-	}
+	}*/
 	
 	public static void login(String userName, String password) {
 	      try {
@@ -77,9 +77,9 @@ public abstract class ClientController {
 	        }
 	  }
 
-  public static void makeMessage(String username, int id, String message){
+  public static void makeMessage(String username, int i, String message){
     try {
-      SocketClient.send("MAKE_MESSAGE", username + "\n" + id + "\n" + message);
+      SocketClient.send("MAKE_MESSAGE", username + "\n" + i + "\n" + message);
     } 
     catch (IOException e) {
       e.printStackTrace();
