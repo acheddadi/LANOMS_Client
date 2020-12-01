@@ -45,9 +45,13 @@ public abstract class ClientController {
     // return 0;
   }
 
-  public static String getMessage(int i, int j) {
-    // TODO Auto-generated method stub
-    return null;
+  public static void getMessage(String user, int i, int j) {
+	  try {
+	      SocketClient.send("GET_MSG", user + "\n" + i +"\n" + j);
+	    } 
+	    catch (IOException e) {
+	      e.printStackTrace();
+	    }
   }
 
   private static void setUserCount(int count){
@@ -98,9 +102,12 @@ public abstract class ClientController {
         case "DISPLAY_PICTURE":
         	UserCache.setUserDisplayPicture(data.getByteData());
         	break;
-	case "USER_AUTH":
+        case "USER_AUTH":
             LoginPane.setLoginCode(Utility.convertToInt(data.getData()));
             break;
+        case "GET_MSG":
+        	setUserInfo(data.getData());
+       break;
         default:
           System.out.println("Key: " + data.getKey() + " Value: " + data.getData());
           return;
