@@ -135,6 +135,7 @@ public abstract class UserCache {
 	}
 	
 	public static boolean isCurrentUser(User user) {
+		System.out.println("Current user: " + currentUser + "\nTesting against: " + user);
 		return currentUser.equals(user.getUsername());
 	}
 	
