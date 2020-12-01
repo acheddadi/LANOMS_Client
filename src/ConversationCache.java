@@ -91,6 +91,18 @@ public abstract class ConversationCache {
 		
 	}
 	
+	public static void setConversationCount(int count) {
+		conversationCount = count;
+	}
+	
+	public static void setMessageCount(int count) {
+		messageCount = count;
+	}
+	
+	public static void setMessage(String message) {
+		ConversationCache.message = message;
+	}
+	
 	public static boolean isInitialized() {
 		return initialized;
 	}

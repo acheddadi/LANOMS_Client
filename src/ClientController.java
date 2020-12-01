@@ -106,14 +106,13 @@ public abstract class ClientController {
             LoginPane.setLoginCode(Utility.convertToInt(data.getData()));
             break;
         case "CONV_COUNT":
-        	
+        	ConversationCache.setConversationCount(Utility.convertToInt(data.getData()));
             break;
-        case "GET_MSG":
-        	
-        	break;
-        	
         case "MSG_COUNT":
-        	
+        	ConversationCache.setMessageCount(Utility.convertToInt(data.getData()));
+        	break;
+        case "GET_MSG":
+        	ConversationCache.setMessage(data.getData());
         	break;
         default:
           System.out.println("Key: " + data.getKey() + " Value: " + data.getData());
