@@ -102,6 +102,11 @@ public class GlobalPane extends AnchorPane {
 		descriptionPane.setChatLog(conversation);
 	}
 	
+	public static void openConversation(int conversationIndex) {
+		if (instance != null)
+			instance.selectionPane.openConversation(conversationIndex);
+	}
+	
 	public static void updateLayout() {
 		if (instance != null)
 			instance.selectionPane.updateLayout();

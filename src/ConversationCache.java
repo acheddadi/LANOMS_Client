@@ -149,6 +149,10 @@ public abstract class ConversationCache {
 		return toReturn;
 	}
 	
+	public static int getSize() {
+		return conversations.size();
+	}
+	
 	public static boolean isEmpty() {
 		return conversations.size() == 0;
 	}

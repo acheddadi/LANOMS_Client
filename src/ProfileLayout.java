@@ -47,7 +47,18 @@ public class ProfileLayout extends VBox {
 		setAlignment(Pos.CENTER);
 		
 		if (!mainUser) {
+			int index = ConversationCache.getSize();
 			openConversation = new Button("Open new conversation");
+			openConversation.setOnAction(e -> {
+				//ClientController.makeConversation(UserCache.getCurrentUser(), user.getUsername());
+				
+				Conversation conversation = new Conversation(index, 2);
+				conversation.addMessage(UserCache.getUser(UserCache.getCurrentUser()), "@server has joined the conversation.");
+				conversation.addMessage(user, "@server has joined the conversation.");
+				ConversationCache.addConversation(conversation);
+				
+				GlobalPane.openConversation(index);
+			});
 			getChildren().addAll(displayPicture, profileText, openConversation);
 		}
 		else {

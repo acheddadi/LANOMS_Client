@@ -85,6 +85,15 @@ public abstract class ClientController {
       e.printStackTrace();
     }
   }
+  
+  public static void makeConversation(String senderUsername, String receiverUsername) {
+	  try {
+	      SocketClient.send("MAKE_CONVO", senderUsername + "\n" + receiverUsername);
+	    } 
+	    catch (IOException e) {
+	      e.printStackTrace();
+	    }
+  }
 
   public static void handleMessage(SocketMessage data) {
     if (data.getKey() != null) {

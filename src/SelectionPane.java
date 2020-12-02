@@ -29,6 +29,12 @@ public class SelectionPane extends AnchorPane {
 		AnchorPane.setRightAnchor(iconPane, 10.0);
 	}
 	
+	public void openConversation(int conversationIndex) {
+		currentLayout = GlobalPane.INBOX;
+		currentIcon = conversationIndex;
+		updateLayout();
+	}
+	
 	public void updateLayout() {
 		if (currentLayout == GlobalPane.SETTINGS)
 			return;
@@ -45,8 +51,13 @@ public class SelectionPane extends AnchorPane {
 			break;
 		}
 		
+		// Fail-safe
+		if (currentIcon >= icons.length)
+			currentIcon = 0;
+		
 		iconPane.getChildren().addAll(icons);
 		group.getToggles().addAll(icons);
+		
 		
 		if (icons.length > 0) {
 			// Select first button
