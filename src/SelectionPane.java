@@ -29,6 +29,9 @@ public class SelectionPane extends AnchorPane {
 	}
 	
 	public void updateLayout() {
+		if (currentLayout == GlobalPane.SETTINGS)
+			return;
+		
 		iconPane.getChildren().clear();
 		group.getToggles().clear();
 		
@@ -38,9 +41,6 @@ public class SelectionPane extends AnchorPane {
 			break;
 		case GlobalPane.SEARCH:
 			getUsers();
-			break;
-		case GlobalPane.SETTINGS:
-			getSettings();
 			break;
 		}
 		
@@ -164,8 +164,14 @@ public class SelectionPane extends AnchorPane {
 		icons[0] = new RadioButton("Window Settings");
 		icons[1] = new RadioButton("User Settings");
 		
-		icons[0].setOnAction(e -> parent.setDescription(GlobalPane.WINDOW_SETTINGS));
-		icons[1].setOnAction(e -> parent.setDescription(GlobalPane.USER_SETTINGS));
+		icons[0].setOnAction(e -> {
+			parent.setDescription(GlobalPane.WINDOW_SETTINGS);
+			currentIcon = 0;
+		});
+		icons[1].setOnAction(e -> {
+			parent.setDescription(GlobalPane.USER_SETTINGS);
+			currentIcon = 1;
+		});
 	}
 	
 	private void draw() {

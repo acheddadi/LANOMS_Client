@@ -18,11 +18,12 @@ public class ClientDriver extends Application {
 		final double MAIN_MIN_WIDTH = 900.0, MAIN_MIN_HEIGHT = 500;
 		final double LOGIN_WIDTH = 350.0, LOGIN_HEIGHT = 450.0;
 		
-		// Setup primaryStage		
+		// Setup main scene		
 		GlobalPane globalPane = new GlobalPane();
 		Scene mainScene = new Scene(globalPane);
 		mainScene.getStylesheets().add("style.css");
 		
+		// Setup main stage
 		Stage mainStage = new Stage();
 		mainStage.setTitle(WINDOW_TITLE);
 		mainStage.setMinWidth(MAIN_MIN_WIDTH);
