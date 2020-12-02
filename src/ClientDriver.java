@@ -1,7 +1,9 @@
 import javafx.application.*;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class ClientDriver extends Application {
 
@@ -29,6 +31,14 @@ public class ClientDriver extends Application {
 		mainStage.setOnShowing(e -> {
 			loginStage.close();
 			globalPane.initialize();
+		});
+		
+		mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+		    @Override
+		    public void handle(WindowEvent t) {
+		        Platform.exit();
+		        System.exit(0);
+		    }
 		});
 		
 		// Setup loginStage
