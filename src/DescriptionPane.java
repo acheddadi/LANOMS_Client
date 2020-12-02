@@ -70,6 +70,7 @@ public class DescriptionPane extends AnchorPane {
 	
 	private void getUserSettings() {
 		getChildren().add(userSettings);
+		userSettings.setMessage();
 	}
 	
 }

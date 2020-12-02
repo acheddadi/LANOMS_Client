@@ -107,7 +107,9 @@ public abstract class UserCache {
 		
 	}
 	
-	
+	public static boolean isBusy() {
+		return semaphore.availablePermits() == 0;
+	}
 	
 	public static void updateUserList() {
 		Thread thread = new Thread (new UserCacheThread());

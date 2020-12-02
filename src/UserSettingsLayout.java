@@ -3,6 +3,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -23,10 +24,16 @@ import javafx.stage.Window;
 public class UserSettingsLayout extends VBox {
 	private FileChooser fileChooser;
 	private ImageView iv_displayPicture;
+	private TextArea ta_message;
 	
 	public UserSettingsLayout(double padding) {
 		super(padding);
 		fileChooser = new FileChooser();
+		ta_message = new TextArea();
+		ta_message.setWrapText(true);
+		ta_message.setPrefHeight(60.0);
+		setMessage();
+		
 		// Set anchors for blank page
 		AnchorPane.setTopAnchor(this, 10.0);
 		AnchorPane.setBottomAnchor(this, 10.0);
@@ -48,7 +55,7 @@ public class UserSettingsLayout extends VBox {
 		
 		// Set status
 		ComboBox<String> cb_status = new ComboBox<String>();
-		cb_status.getItems().addAll("Available", "Away", "Busy", "Out for lunch");
+		cb_status.getItems().addAll("Online", "Away", "Busy", "Out for lunch");
 		cb_status.getSelectionModel().selectFirst();
 		HBox hb_status = new HBox(5.0);
 		hb_status.setAlignment(Pos.CENTER);
@@ -60,10 +67,6 @@ public class UserSettingsLayout extends VBox {
 		
 		Label lb_message = new Label("Short message: ");
 		
-		TextArea ta_message = new TextArea();
-		ta_message.setWrapText(true);
-		ta_message.setPrefHeight(60.0);
-		
 		Region rg_spacer = new Region();
 		rg_spacer.setPrefHeight(10);
 		
@@ -73,7 +76,24 @@ public class UserSettingsLayout extends VBox {
 		
 		
 		bt_submitMessage.setOnAction(e -> {
-			ClientController.makeUserInfo(UserCache.getCurrentUser(), ta_message.getText(), cb_status.getSelectionModel().getSelectedItem());
+			if (UserCache.isBusy()) {
+				Thread thread = new Thread(new Runnable() {
+					@Override
+					public void run() {
+						while(ConversationCache.isBusy()) {
+							try {
+								Thread.sleep(500);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+						ClientController.makeUserInfo(UserCache.getCurrentUser(), ta_message.getText(), cb_status.getSelectionModel().getSelectedItem());
+					}
+				});
+				Platform.runLater(thread);
+			}
+			else ClientController.makeUserInfo(UserCache.getCurrentUser(), ta_message.getText(), cb_status.getSelectionModel().getSelectedItem());
+			
 			UserCache.updateUserList();
 		});
 		
@@ -111,5 +131,9 @@ public class UserSettingsLayout extends VBox {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void setMessage() {
+		ta_message.setText(UserCache.getUser(UserCache.getCurrentUser()).getMessage());
 	}
 }
