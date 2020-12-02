@@ -1,4 +1,7 @@
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -18,7 +21,7 @@ import javafx.stage.Window;
 
 public class UserSettingsLayout extends VBox {
 	private FileChooser fileChooser;
-	private Image image;
+	private ImageView iv_displayPicture;
 	
 	public UserSettingsLayout(double padding) {
 		super(padding);
@@ -34,14 +37,12 @@ public class UserSettingsLayout extends VBox {
 		lb_title.setStyle("-fx-font-size: 18px");
 		
 		// Set image
-		ImageView iv_displayPicture = new ImageView("user_placeholder.png");
+		iv_displayPicture = new ImageView("user_placeholder.png");
+		iv_displayPicture.setPreserveRatio(true);
+		iv_displayPicture.setFitHeight(64.0);
 		
 		// Set button
 		Button bt_changeDisplay = new Button("Edit display picture");
-		FileChooser fc_changeDisplay = new FileChooser();
-		fc_changeDisplay.setTitle("Edit display picture");
-		fc_changeDisplay.setSelectedExtensionFilter(new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
-		
 		bt_changeDisplay.setOnAction(e -> openFile(e));
 		
 		// Set status
@@ -78,10 +79,21 @@ public class UserSettingsLayout extends VBox {
 		try {
 			File file = fileChooser.showOpenDialog(stage);
 			fileChooser.setInitialDirectory(file.getParentFile());
-			image = new Image(file.getAbsolutePath());
+			if (file != null) updatePicture(file.getPath());
 		} catch (Exception ex){
 			
 		}
 		
+	}
+	
+	private void updatePicture(String path) {
+		File img = new File(path);
+		InputStream isImage;
+		try {
+			isImage = (InputStream) new FileInputStream(img);
+			iv_displayPicture.setImage(new Image(isImage));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 }
