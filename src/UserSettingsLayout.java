@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -62,13 +63,28 @@ public class UserSettingsLayout extends VBox {
 		TextArea ta_message = new TextArea();
 		ta_message.setWrapText(true);
 		ta_message.setPrefHeight(60.0);
+		
+		Region rg_spacer = new Region();
+		rg_spacer.setPrefHeight(10);
+		
+		Button bt_submitMessage = new Button("Save All");
+		bt_submitMessage.setPrefWidth(100);
+		bt_submitMessage.setStyle("-fx-font-size: 16;");
+		
+		
+		bt_submitMessage.setOnAction(e -> {
+			ClientController.makeUserInfo(UserCache.getCurrentUser(), ta_message.getText(), cb_status.getSelectionModel().getSelectedItem());
+			UserCache.updateUserList();
+		});
+		
+		
 		vb_message.getChildren().addAll(lb_message, ta_message);
 				
 		// Set children
 		setStyle("-fx-background-color: white");
 		setAlignment(Pos.CENTER);
 		setPadding(new Insets(10.0, 10.0, 10.0, 10.0));
-		getChildren().addAll(lb_title, iv_displayPicture, bt_changeDisplay, hb_status, vb_message);
+		getChildren().addAll(lb_title, iv_displayPicture, bt_changeDisplay, hb_status, vb_message, rg_spacer, bt_submitMessage);
 	}
 	
 	private void openFile(ActionEvent event) {

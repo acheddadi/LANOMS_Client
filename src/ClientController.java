@@ -94,6 +94,15 @@ public abstract class ClientController {
 	      e.printStackTrace();
 	    }
   }
+  
+  public static void makeUserInfo(String username, String profile, String status) {
+	  try {
+	      SocketClient.send("MAKE_USER_INFO", username + "\n" + profile + "\n" + status);
+	    } 
+	    catch (IOException e) {
+	      e.printStackTrace();
+	    }
+  }
 
   public static void handleMessage(SocketMessage data) {
     if (data.getKey() != null) {
