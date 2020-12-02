@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
 
+import javafx.application.Platform;
+
 public abstract class ConversationCache {
 	private static ArrayList<Conversation> conversations = new ArrayList<Conversation>();
 	
@@ -88,8 +90,16 @@ public abstract class ConversationCache {
 			if (!initialized) {
 				initialized = true;
 			}
-			else
-				GlobalPane.updateLayout();
+			else {
+				Thread thread = new Thread(new Runnable() {
+					@Override
+					public void run() {
+						GlobalPane.updateLayout();
+					}
+				});
+				Platform.runLater(thread);
+			}
+				
 			
 			semaphore.release();
 		}
@@ -113,8 +123,8 @@ public abstract class ConversationCache {
 	}
 	
 	public static void updateConversations() {
-		ConversationCacheThread thread = new ConversationCacheThread();
-		thread.run();
+		Thread thread = new Thread(new ConversationCacheThread());
+		thread.start();
 	}
 	
 	public static void addConversation(Conversation conversation) {

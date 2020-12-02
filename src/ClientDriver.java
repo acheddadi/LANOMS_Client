@@ -53,13 +53,6 @@ public class ClientDriver extends Application {
 		loginStage.setHeight(LOGIN_HEIGHT);
 		loginStage.setScene(loginScene);
 		loginStage.show();
-		
-		// Test updateUserList()
-		mainScene.setOnKeyPressed(key -> {
-			KeyCode keyCode = key.getCode();
-			if (keyCode.equals(KeyCode.R))
-				ConversationCache.updateConversations();
-		});
 	}
 
 }

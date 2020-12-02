@@ -1,5 +1,6 @@
 import java.util.concurrent.Semaphore;
 
+import javafx.application.Platform;
 import javafx.css.PseudoClass;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -90,8 +91,13 @@ public class LoginPane extends VBox {
 						e.printStackTrace();
 					}
 				}
-				
-				followUpStage.show();
+				Thread thread = new Thread(new Runnable() {
+					@Override
+					public void run() {
+						followUpStage.show();
+					}
+				});
+				Platform.runLater(thread);
 				break;
 				
 			}
@@ -160,7 +166,7 @@ public class LoginPane extends VBox {
 			switchSubtitle(NO_CONNECTION);
 			e.printStackTrace();
 		}
-		LoginThread thread = new LoginThread(tf_username.getText(), pf_password.getText());
-		thread.run();
+		Thread thread = new Thread(new LoginThread(tf_username.getText(), pf_password.getText()));
+		thread.start();
 	}
 }

@@ -110,8 +110,8 @@ public abstract class UserCache {
 	
 	
 	public static void updateUserList() {
-		UserCacheThread thread = new UserCacheThread();
-		thread.run();
+		Thread thread = new Thread (new UserCacheThread());
+		thread.start();
 	}
 	
 	public static void setUserCount(int userCount) {
