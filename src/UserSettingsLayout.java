@@ -1,18 +1,28 @@
+import java.io.File;
+
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Window;
 
 public class UserSettingsLayout extends VBox {
+	private FileChooser fileChooser;
+	private Image image;
 	
 	public UserSettingsLayout(double padding) {
 		super(padding);
+		fileChooser = new FileChooser();
 		// Set anchors for blank page
 		AnchorPane.setTopAnchor(this, 10.0);
 		AnchorPane.setBottomAnchor(this, 10.0);
@@ -28,6 +38,11 @@ public class UserSettingsLayout extends VBox {
 		
 		// Set button
 		Button bt_changeDisplay = new Button("Edit display picture");
+		FileChooser fc_changeDisplay = new FileChooser();
+		fc_changeDisplay.setTitle("Edit display picture");
+		fc_changeDisplay.setSelectedExtensionFilter(new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
+		
+		bt_changeDisplay.setOnAction(e -> openFile(e));
 		
 		// Set status
 		ComboBox<String> cb_status = new ComboBox<String>();
@@ -53,5 +68,20 @@ public class UserSettingsLayout extends VBox {
 		setAlignment(Pos.CENTER);
 		setPadding(new Insets(10.0, 10.0, 10.0, 10.0));
 		getChildren().addAll(lb_title, iv_displayPicture, bt_changeDisplay, hb_status, vb_message);
+	}
+	
+	private void openFile(ActionEvent event) {
+		Window stage = this.getScene().getWindow();
+		fileChooser.setTitle("Select a Picture");
+		fileChooser.getExtensionFilters().add(new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
+		
+		try {
+			File file = fileChooser.showOpenDialog(stage);
+			fileChooser.setInitialDirectory(file.getParentFile());
+			image = new Image(file.getAbsolutePath());
+		} catch (Exception ex){
+			
+		}
+		
 	}
 }
