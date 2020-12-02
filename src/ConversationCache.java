@@ -106,6 +106,10 @@ public abstract class ConversationCache {
 		
 	}
 	
+	public static boolean isBusy() {
+		return semaphore.availablePermits() == 0;
+	}
+	
 	public static void setConversationCount(int count) {
 		conversationCount = count;
 	}

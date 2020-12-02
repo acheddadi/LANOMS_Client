@@ -1,3 +1,4 @@
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
@@ -48,24 +49,46 @@ public class ProfileLayout extends VBox {
 		
 		if (!mainUser) {
 			int index = ConversationCache.getSize();
+			
 			openConversation = new Button("Open new conversation");
 			openConversation.setOnAction(e -> {
-				ClientController.makeConversation(UserCache.getCurrentUser(), user.getUsername());
-				
-				Conversation conversation = new Conversation(index, 2);
-				conversation.addMessage(UserCache.getUser(UserCache.getCurrentUser()), "@server has joined the conversation.");
-				conversation.addMessage(user, "@server has joined the conversation.");
-				ConversationCache.addConversation(conversation);
-				
-				GlobalPane.openConversation(index);
-			    
-			    // Reset auto-update timer.
-			    GlobalPane.delayUpdate();
+				if (ConversationCache.isBusy()) {
+					Thread thread = new Thread(new Runnable() {
+						@Override
+						public void run() {
+							while(ConversationCache.isBusy()) {
+								try {
+									Thread.sleep(500);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+							}
+							openConversation(user, index);
+						}
+					});
+					Platform.runLater(thread);
+				}
+				else openConversation(user, index);
 			});
+			
 			getChildren().addAll(displayPicture, profileText, openConversation);
 		}
 		else {
 			getChildren().addAll(displayPicture, profileText);
 		}
+	}
+	
+	private void openConversation(User user, int index) {
+		ClientController.makeConversation(UserCache.getCurrentUser(), user.getUsername());
+		
+		Conversation conversation = new Conversation(index, 2);
+		conversation.addMessage(UserCache.getUser(UserCache.getCurrentUser()), "@server has joined the conversation.");
+		conversation.addMessage(user, "@server has joined the conversation.");
+		ConversationCache.addConversation(conversation);
+		
+		GlobalPane.openConversation(index);
+	    
+	    // Reset auto-update timer.
+	    GlobalPane.delayUpdate();
 	}
 }

@@ -1,3 +1,4 @@
+import javafx.application.Platform;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
@@ -14,7 +15,27 @@ public class ChatInput extends TextField {
 		this.setPrefHeight(40);
 		
 		// Set action
-		this.setOnAction(e -> sendMessage());
+		this.setOnAction(e -> {
+			if (ConversationCache.isBusy()) {
+				setEditable(false);
+				Thread thread = new Thread(new Runnable() {
+					@Override
+					public void run() {
+						while(ConversationCache.isBusy()) {
+							try {
+								Thread.sleep(500);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+						sendMessage();
+						setEditable(true);
+					}
+				});
+				Platform.runLater(thread);
+			}
+			else sendMessage();
+		});
 		
 		conversationIndex = -1;
 	}
