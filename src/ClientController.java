@@ -110,7 +110,7 @@ public abstract class ClientController {
         case "GET_MSG":
         	ConversationCache.setMessage(data.getData());
         	break;
-        case "MAKE_MSG":
+        case "MAKE_MESSAGE":
         	ConversationCache.updateConversations();
         	break;
         default:
