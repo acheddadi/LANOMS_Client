@@ -43,12 +43,12 @@ public class ClientDriver extends Application {
 		loginStage.setScene(loginScene);
 		loginStage.show();
 		
-		/*// Test updateUserList()
+		// Test updateUserList()
 		mainScene.setOnKeyPressed(key -> {
 			KeyCode keyCode = key.getCode();
 			if (keyCode.equals(KeyCode.R))
 				ConversationCache.updateConversations();
-		});*/
+		});
 	}
 
 }

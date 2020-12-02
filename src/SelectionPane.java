@@ -135,7 +135,6 @@ public class SelectionPane extends AnchorPane {
 			
 			int index = i;
 			icons[i].setOnAction(e -> {
-				System.out.println("I was clicked on");
 				parent.setDescription(GlobalPane.CHAT_LOG, conversationList[index]);
 				currentIcon = index;
 			});
