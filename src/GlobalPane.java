@@ -91,9 +91,9 @@ public class GlobalPane extends AnchorPane {
 		descriptionPane.setChatLog(conversation);
 	}
 	
-	public static void updateSelection() {
-		if (instance != null && instance.currentSelection == SEARCH)
-			instance.selectionPane.setLayout(instance.currentSelection);
+	public static void updateLayout() {
+		if (instance != null)
+			instance.selectionPane.updateLayout();
 	}
 	
 	/*// Old Code

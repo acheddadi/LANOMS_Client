@@ -12,6 +12,7 @@ public abstract class ConversationCache {
 	private static volatile boolean initialized;
 	
 	private static class ConversationCacheThread implements Runnable {
+		private final long SLEEP_TIME = 100, TIMEOUT_TIME = 5000;
 		
 		private ConversationCacheThread() {
 			try {
@@ -30,10 +31,10 @@ public abstract class ConversationCache {
 			long startTime = System.currentTimeMillis();
 			
 			while(conversationCount == -1) {
-				if (System.currentTimeMillis() - startTime > 3000) 
+				if (System.currentTimeMillis() - startTime > TIMEOUT_TIME) 
 					throw new RuntimeException("ConversationCacheThread timedout.");
 				try {
-					Thread.sleep(500);
+					Thread.sleep(SLEEP_TIME);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -48,10 +49,10 @@ public abstract class ConversationCache {
 				
 				startTime = System.currentTimeMillis();
 				while(messageCount == -1) {
-					if (System.currentTimeMillis() - startTime > 3000) 
+					if (System.currentTimeMillis() - startTime > TIMEOUT_TIME) 
 						throw new RuntimeException("ConversationCacheThread timedout.");
 					try {
-						Thread.sleep(500);
+						Thread.sleep(SLEEP_TIME);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -64,10 +65,10 @@ public abstract class ConversationCache {
 					
 					startTime = System.currentTimeMillis();
 					while(message == null) {
-						if (System.currentTimeMillis() - startTime > 3000) 
+						if (System.currentTimeMillis() - startTime > TIMEOUT_TIME) 
 							throw new RuntimeException("ConversationCacheThread timedout.");
 						try {
-							Thread.sleep(500);
+							Thread.sleep(SLEEP_TIME);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
@@ -85,6 +86,8 @@ public abstract class ConversationCache {
 			
 			if (!initialized)
 				initialized = true;
+			else
+				GlobalPane.updateLayout();
 			
 			semaphore.release();
 		}

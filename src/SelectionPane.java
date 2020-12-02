@@ -11,6 +11,9 @@ public class SelectionPane extends AnchorPane {
 	private RadioButton[] icons;
 	private ToggleGroup group;
 	
+	private int currentLayout;
+	private int currentIcon;
+	
 	public SelectionPane(GlobalPane parent) {
 		super();
 		this.parent = parent;
@@ -25,10 +28,43 @@ public class SelectionPane extends AnchorPane {
 		AnchorPane.setRightAnchor(iconPane, 10.0);
 	}
 	
-	public void setLayout(int layout) {
+	public void updateLayout() {
 		iconPane.getChildren().clear();
 		group.getToggles().clear();
 		
+		switch(currentLayout) {
+		case GlobalPane.INBOX:
+			getInbox();
+			break;
+		case GlobalPane.SEARCH:
+			getUsers();
+			break;
+		case GlobalPane.SETTINGS:
+			getSettings();
+			break;
+		}
+		
+		iconPane.getChildren().addAll(icons);
+		group.getToggles().addAll(icons);
+		
+		if (icons.length > 0) {
+			// Select first button
+			icons[currentIcon].fire();
+			group.selectToggle(icons[currentIcon]);
+			
+			// Set button style
+			for (RadioButton icon: icons) {
+				icon.getStyleClass().remove("radio-button");
+				icon.getStyleClass().add("toggle-button");
+				icon.getStylesheets().add("selection.css");
+			}
+		}
+		else parent.setDescription(GlobalPane.BLANK);
+	}
+	
+	public void setLayout(int layout) {
+		iconPane.getChildren().clear();
+		group.getToggles().clear();
 		switch(layout) {
 		case GlobalPane.INBOX:
 			getInbox();
@@ -57,6 +93,9 @@ public class SelectionPane extends AnchorPane {
 			}
 		}
 		else parent.setDescription(GlobalPane.BLANK);
+		
+		currentLayout = layout;
+		currentIcon = 0;
 	}
 	
 	private void getInbox() {
@@ -95,7 +134,11 @@ public class SelectionPane extends AnchorPane {
 			icons[i].setGraphic(displayPicture);
 			
 			int index = i;
-			icons[i].setOnAction(e -> parent.setDescription(GlobalPane.CHAT_LOG, conversationList[index]));
+			icons[i].setOnAction(e -> {
+				System.out.println("I was clicked on");
+				parent.setDescription(GlobalPane.CHAT_LOG, conversationList[index]);
+				currentIcon = index;
+			});
 		}
 	}
 	
@@ -110,7 +153,10 @@ public class SelectionPane extends AnchorPane {
 			icons[i].setGraphic(displayPicture);
 			
 			int index = i;
-			icons[i].setOnAction(e -> parent.setDescription(GlobalPane.PROFILE, userList[index]));
+			icons[i].setOnAction(e -> {
+				parent.setDescription(GlobalPane.PROFILE, userList[index]);
+				currentIcon = index;
+			});
 		}
 	}
 	

@@ -15,6 +15,7 @@ public abstract class UserCache {
 	private static volatile byte[] userDisplayPicture;
 	
 	private static class UserCacheThread implements Runnable {
+		private final long SLEEP_TIME = 100, TIMEOUT_TIME = 5000;
 		private UserCacheThread() {
 			try {
 				semaphore.acquire();
@@ -31,10 +32,10 @@ public abstract class UserCache {
 
 			long startTime = System.currentTimeMillis();
 			while (userCount == -1) {
-				if (System.currentTimeMillis() - startTime > 3000) 
+				if (System.currentTimeMillis() - startTime > TIMEOUT_TIME) 
 					throw new RuntimeException("UserCacheThread timedout.");
 				try {
-					Thread.sleep(500);
+					Thread.sleep(SLEEP_TIME);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -48,10 +49,10 @@ public abstract class UserCache {
 				
 				startTime = System.currentTimeMillis();
 				while (userInfo == null) {
-					if (System.currentTimeMillis() - startTime > 3000) 
+					if (System.currentTimeMillis() - startTime > TIMEOUT_TIME) 
 						throw new RuntimeException("UserCacheThread timedout.");
 					try {
-						Thread.sleep(500);
+						Thread.sleep(SLEEP_TIME);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -70,10 +71,10 @@ public abstract class UserCache {
 				
 				// Wait for userDisplayPicture to be updated by ClientController.
 				while (userDisplayPicture == null) {
-					if (System.currentTimeMillis() - startTime > 3000) 
+					if (System.currentTimeMillis() - startTime > TIMEOUT_TIME) 
 						throw new RuntimeException("UserCacheThread timedout.");
 					try {
-						Thread.sleep(500);
+						Thread.sleep(SLEEP_TIME);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -101,11 +102,12 @@ public abstract class UserCache {
 				userList.add(user);
 			}
 			
-			GlobalPane.updateSelection();
 			semaphore.release();
 		}
 		
 	}
+	
+	
 	
 	public static void updateUserList() {
 		UserCacheThread thread = new UserCacheThread();
