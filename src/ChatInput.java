@@ -25,7 +25,9 @@ public class ChatInput extends TextField {
 			ConversationCache.addMessage(conversationIndex, UserCache.getUser(UserCache.getCurrentUser()), getText());
 			GlobalPane.updateLayout();
 			clear();
-			
+		    
+		    // Reset auto-update timer.
+		    GlobalPane.delayUpdate();
 		}
 	}
 	

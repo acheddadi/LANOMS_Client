@@ -74,6 +74,10 @@ public class NavigationPane extends AnchorPane {
 		AnchorPane.setRightAnchor(icons[GlobalPane.SETTINGS], 0.0);
 	}
 	
+	public void selectInbox() {
+		group.selectToggle(icons[0]);
+	}
+	
 	private void draw() {
 		for(RadioButton icon: icons) {
 			icon.setPrefWidth(getWidth());

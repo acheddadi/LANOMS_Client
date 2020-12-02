@@ -10,9 +10,11 @@ import javafx.util.Duration;
 public class GlobalPane extends AnchorPane {
 	public static final int INBOX = 0, SEARCH = 1, SETTINGS = 2;
 	public static final int BLANK = 0, CHAT_LOG = 1, PROFILE = 2, WINDOW_SETTINGS = 3, USER_SETTINGS = 4;
+	private static final double UPDATE_DURATION = 5000;
 	
 	private final double NAV_WIDTH = 50.0;
 	private final double SEL_WIDTH = 200.0f;
+	
 	
 	private NavigationPane navigationPane;
 	private SelectionPane selectionPane;
@@ -73,7 +75,7 @@ public class GlobalPane extends AnchorPane {
 		setSelection(INBOX);
 		
 		timeline = new Timeline();
-		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(5000), e -> ConversationCache.updateConversations()));
+		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(UPDATE_DURATION), e -> ConversationCache.updateConversations()));
 		timeline.setCycleCount(Animation.INDEFINITE);
 		timeline.play();
 	}
@@ -103,13 +105,20 @@ public class GlobalPane extends AnchorPane {
 	}
 	
 	public static void openConversation(int conversationIndex) {
-		if (instance != null)
+		if (instance != null){
+			instance.navigationPane.selectInbox();
 			instance.selectionPane.openConversation(conversationIndex);
+		}
 	}
 	
 	public static void updateLayout() {
 		if (instance != null)
 			instance.selectionPane.updateLayout();
+	}
+	
+	public static void delayUpdate() {
+		if (instance != null)
+			instance.timeline.jumpTo(Duration.ZERO);
 	}
 	
 	/*// Old Code

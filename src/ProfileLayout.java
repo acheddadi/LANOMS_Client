@@ -58,6 +58,9 @@ public class ProfileLayout extends VBox {
 				ConversationCache.addConversation(conversation);
 				
 				GlobalPane.openConversation(index);
+			    
+			    // Reset auto-update timer.
+			    GlobalPane.delayUpdate();
 			});
 			getChildren().addAll(displayPicture, profileText, openConversation);
 		}
