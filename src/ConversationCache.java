@@ -84,8 +84,9 @@ public abstract class ConversationCache {
 			for (Conversation toAdd: conversationBuffer)
 				ConversationCache.addConversation(toAdd);
 			
-			if (!initialized)
+			if (!initialized) {
 				initialized = true;
+			}
 			else
 				GlobalPane.updateLayout();
 			

@@ -1,5 +1,10 @@
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 
 public class GlobalPane extends AnchorPane {
 	public static final int INBOX = 0, SEARCH = 1, SETTINGS = 2;
@@ -11,11 +16,11 @@ public class GlobalPane extends AnchorPane {
 	private NavigationPane navigationPane;
 	private SelectionPane selectionPane;
 	private DescriptionPane descriptionPane;
-	
 	private int currentSelection;
 	private int currentDescription;
 	private Conversation currentConversation;
 	private User currentProfile;
+	private Timeline timeline;
 	
 	private static GlobalPane instance;
 	
@@ -65,6 +70,11 @@ public class GlobalPane extends AnchorPane {
 		
 		// Setup first screen
 		setSelection(INBOX);
+		
+		timeline = new Timeline();
+		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(5000), e -> ConversationCache.updateConversations()));
+		timeline.setCycleCount(Animation.INDEFINITE);
+		timeline.play();
 	}
 	
 	public void setSelection(int selection) {

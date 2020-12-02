@@ -22,7 +22,10 @@ public class ChatInput extends TextField {
 	private void sendMessage() {
 		if (conversationIndex != -1 && !getText().isBlank()) {
 			ClientController.makeMessage(UserCache.getCurrentUser(), conversationIndex, getText());
+			ConversationCache.addMessage(conversationIndex, UserCache.getUser(UserCache.getCurrentUser()), getText());
+			GlobalPane.updateLayout();
 			clear();
+			
 		}
 	}
 	

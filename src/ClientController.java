@@ -111,7 +111,6 @@ public abstract class ClientController {
         	ConversationCache.setMessage(data.getData());
         	break;
         case "MAKE_MESSAGE":
-        	ConversationCache.updateConversations();
         	break;
         default:
           System.out.println("Key: " + data.getKey() + " Value: " + data.getData());
