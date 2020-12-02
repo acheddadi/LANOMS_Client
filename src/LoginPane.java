@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 
 public class LoginPane extends VBox {
 	public static final int ENTER_ID = 0, INVALID_ID = 1, NO_CONNECTION = 2, SUCCESS = 3;
+	private final long SLEEP_TIME = 100, TIMEOUT_TIME = 5000;
 	private TextField tf_username;
 	private PasswordField pf_password;
 	private Label lb_subtitle;
@@ -51,10 +52,10 @@ public class LoginPane extends VBox {
 			
 			long startTime = System.currentTimeMillis();
 			while(loginCode == -1) {
-				if (System.currentTimeMillis() - startTime > 3000) 
+				if (System.currentTimeMillis() - startTime > TIMEOUT_TIME) 
 					throw new RuntimeException("LoginThread timedout.");
 				try {
-					Thread.sleep(500);
+					Thread.sleep(SLEEP_TIME);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -71,10 +72,10 @@ public class LoginPane extends VBox {
 				UserCache.updateUserList();
 				
 				while (UserCache.isEmpty()) {
-					if (System.currentTimeMillis() - startTime > 3000) 
+					if (System.currentTimeMillis() - startTime > TIMEOUT_TIME) 
 						throw new RuntimeException("LoginThread timedout.");
 					try {
-						Thread.sleep(500);
+						Thread.sleep(SLEEP_TIME);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -83,10 +84,10 @@ public class LoginPane extends VBox {
 				ConversationCache.updateConversations();
 				
 				while (!ConversationCache.isInitialized()) {
-					if (System.currentTimeMillis() - startTime > 3000) 
+					if (System.currentTimeMillis() - startTime > TIMEOUT_TIME) 
 						throw new RuntimeException("LoginThread timedout.");
 					try {
-						Thread.sleep(500);
+						Thread.sleep(SLEEP_TIME);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
