@@ -9,7 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 public class ChatLog extends ScrollPane {
-	
+	private final String SERVER_COMMAND = "@server";
 	public ChatLog() {
 		super();
 		
@@ -37,20 +37,33 @@ public class ChatLog extends ScrollPane {
 			iv_message.setPreserveRatio(true);
 			iv_message.setFitHeight(32.0);
 			
-			FlowPane fp_message = new FlowPane(new Text(messages[i].getMessage()));
+			Label label = new Label();
+			String message = messages[i].getMessage();
+			
+			BorderPane bp_message = new BorderPane();
+			
+			if (message.contains(SERVER_COMMAND)) {
+				message = messages[i].getUser().getName() + message.substring(SERVER_COMMAND.length());
+				label.setText(message);
+				label.setStyle("-fx-text-fill: grey; -fx-font-style: italic;");
+			}
+			else {
+				bp_message.setTop(lb_message);
+				bp_message.setLeft(iv_message);
+				BorderPane.setMargin(iv_message, new Insets(0.0, 10.0, 0.0, 0.0));
+				BorderPane.setMargin(lb_message, new Insets(0.0, 0.0, 10.0, 0.0));
+			}
+			
+			FlowPane fp_message = new FlowPane();
 			fp_message.setMinHeight(30);
 			fp_message.setPadding(new Insets(10.0, 10.0, 10.0, 10.0));
 			fp_message.setStyle("-fx-background-color: whitesmoke; -fx-background-radius: 5 5 5 5;");
-			
-			BorderPane bp_message = new BorderPane();
-			bp_message.setTop(lb_message);
-			bp_message.setLeft(iv_message);
+			fp_message.getChildren().add(label);
 			bp_message.setCenter(fp_message);
 			bp_message.setPadding(new Insets(7.5, 10.0, 7.5, 10.0));
-			BorderPane.setMargin(iv_message, new Insets(0.0, 10.0, 0.0, 0.0));
-			BorderPane.setMargin(lb_message, new Insets(0.0, 0.0, 10.0, 0.0));
 			
 			chatLog.getChildren().add(bp_message);
+			
 		}
 		setContent(chatLog);
 	}

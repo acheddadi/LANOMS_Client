@@ -4,11 +4,13 @@ public class Conversation {
 	private ArrayList<User> participants;
 	private ArrayList<Message> conversation;
 	private int index;
+	private int initialSize;
 	
-	public Conversation(int index) {
+	public Conversation(int index, int initialSize) {
 		conversation = new ArrayList<Message>();
 		participants = new ArrayList<User>();
 		this.index = index;
+		this.initialSize = initialSize;
 	}
 	
 	public void addMessage(User user, String message) {
@@ -20,6 +22,8 @@ public class Conversation {
 	}
 	
 	public Message[] getMessages() {
+		initialSize = conversation.size();
+		
 		Message[] toReturn = new Message[conversation.size()];
 		for (int i = 0; i < toReturn.length; i++) toReturn[i] = conversation.get(i);
 		
@@ -35,5 +39,13 @@ public class Conversation {
 	
 	public int getIndex() {
 		return index;
+	}
+	
+	public int getInitialSize() {
+		return initialSize;
+	}
+	
+	public boolean getRead() {
+		return initialSize == conversation.size();
 	}
 }

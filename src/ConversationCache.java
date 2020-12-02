@@ -42,7 +42,8 @@ public abstract class ConversationCache {
 			
 			Conversation[] conversationBuffer = new Conversation[conversationCount];
 			for (int i = 0; i < conversationBuffer.length; i++) {
-				conversationBuffer[i] = new Conversation(i);
+				conversationBuffer[i] = new Conversation(i, initialized ?
+						conversations.get(i).getInitialSize() : 0); // Replace 0 with the value stored on disk.
 				
 				messageCount = -1;
 				ClientController.getMessageCount(UserCache.getCurrentUser(), i);
