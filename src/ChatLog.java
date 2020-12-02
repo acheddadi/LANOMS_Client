@@ -44,7 +44,6 @@ public class ChatLog extends ScrollPane {
 			
 			if (message.contains(SERVER_COMMAND)) {
 				message = messages[i].getUser().getName() + message.substring(SERVER_COMMAND.length());
-				label.setText(message);
 				label.setStyle("-fx-text-fill: grey; -fx-font-style: italic;");
 			}
 			else {
@@ -53,6 +52,7 @@ public class ChatLog extends ScrollPane {
 				BorderPane.setMargin(iv_message, new Insets(0.0, 10.0, 0.0, 0.0));
 				BorderPane.setMargin(lb_message, new Insets(0.0, 0.0, 10.0, 0.0));
 			}
+			label.setText(message);
 			
 			FlowPane fp_message = new FlowPane();
 			fp_message.setMinHeight(30);

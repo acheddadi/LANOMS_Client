@@ -45,7 +45,7 @@ public class Conversation {
 		return initialSize;
 	}
 	
-	public boolean getRead() {
-		return initialSize == conversation.size();
+	public boolean getUnread() {
+		return initialSize != conversation.size();
 	}
 }

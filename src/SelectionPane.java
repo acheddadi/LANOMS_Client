@@ -1,3 +1,4 @@
+import javafx.css.PseudoClass;
 import javafx.geometry.Pos;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
@@ -132,10 +133,12 @@ public class SelectionPane extends AnchorPane {
 			// Create button
 			icons[i] = new RadioButton(name);
 			icons[i].setGraphic(displayPicture);
+			icons[i].pseudoClassStateChanged(PseudoClass.getPseudoClass("unread"), conversationList[i].getUnread());
 			
 			int index = i;
 			icons[i].setOnAction(e -> {
 				parent.setDescription(GlobalPane.CHAT_LOG, conversationList[index]);
+				icons[index].pseudoClassStateChanged(PseudoClass.getPseudoClass("unread"), false);
 				currentIcon = index;
 			});
 		}
