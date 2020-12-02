@@ -110,6 +110,9 @@ public abstract class ClientController {
         case "GET_MSG":
         	ConversationCache.setMessage(data.getData());
         	break;
+        case "MAKE_MSG":
+        	ConversationCache.updateConversations();
+        	break;
         default:
           System.out.println("Key: " + data.getKey() + " Value: " + data.getData());
           return;
