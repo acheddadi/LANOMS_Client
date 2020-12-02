@@ -33,13 +33,8 @@ public class ClientDriver extends Application {
 			globalPane.initialize();
 		});
 		
-		mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-		    @Override
-		    public void handle(WindowEvent t) {
-		        Platform.exit();
-		        System.exit(0);
-		    }
-		});
+		// Force close
+		mainStage.setOnCloseRequest(e -> System.exit(0));
 		
 		// Setup loginStage
 		LoginPane loginPane = new LoginPane(mainStage);
