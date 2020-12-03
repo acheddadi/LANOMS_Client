@@ -48,7 +48,7 @@ public class ChatInput extends TextField {
 			clear();
 		    
 		    // Reset auto-update timer.
-		    GlobalPane.delayUpdate();
+		    GlobalPane.delayConversationUpdate();
 		}
 	}
 	

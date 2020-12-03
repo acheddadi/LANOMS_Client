@@ -25,6 +25,14 @@ public class User implements Serializable, Comparable<User> {
 			this.displayPicture = displayPicture;
 		}
 		
+		public void setMessage(String message) {
+			this.message = message;
+		}
+
+		public void setStatus(String status) {
+			this.status = status;
+		}
+
 		public String getUsername() {
 			return username;
 		}

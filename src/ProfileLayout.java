@@ -89,6 +89,6 @@ public class ProfileLayout extends VBox {
 		GlobalPane.openConversation(index);
 	    
 	    // Reset auto-update timer.
-	    GlobalPane.delayUpdate();
+	    GlobalPane.delayConversationUpdate();
 	}
 }

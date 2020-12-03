@@ -10,7 +10,7 @@ import javafx.util.Duration;
 public class GlobalPane extends AnchorPane {
 	public static final int INBOX = 0, SEARCH = 1, SETTINGS = 2;
 	public static final int BLANK = 0, CHAT_LOG = 1, PROFILE = 2, WINDOW_SETTINGS = 3, USER_SETTINGS = 4;
-	private static final double UPDATE_DURATION = 5000;
+	private static final double CONVERSATION_UPDATE_DURATION = 6000, USER_UPDATE_DURATION = 60000;
 	
 	private final double NAV_WIDTH = 50.0;
 	private final double SEL_WIDTH = 200.0f;
@@ -23,7 +23,9 @@ public class GlobalPane extends AnchorPane {
 	private int currentDescription;
 	private Conversation currentConversation;
 	private User currentProfile;
-	private Timeline timeline;
+	
+	private Timeline conversationTimeline;
+	private Timeline userTimeline;
 	
 	private static GlobalPane instance;
 	
@@ -53,15 +55,15 @@ public class GlobalPane extends AnchorPane {
 		
 		// Setup anchors
 		AnchorPane.setLeftAnchor(navigationPane, 0.0);
-		AnchorPane.setTopAnchor(navigationPane, 20.0);
+		AnchorPane.setTopAnchor(navigationPane, 40.0);
 		AnchorPane.setBottomAnchor(navigationPane, 0.0);
 				
 		AnchorPane.setLeftAnchor(selectionPane, NAV_WIDTH);
-		AnchorPane.setTopAnchor(selectionPane, 20.0);
+		AnchorPane.setTopAnchor(selectionPane, 40.0);
 		AnchorPane.setBottomAnchor(selectionPane, 0.0);
 				
 		AnchorPane.setLeftAnchor(descriptionPane, NAV_WIDTH + SEL_WIDTH);
-		AnchorPane.setTopAnchor(descriptionPane, 20.0);
+		AnchorPane.setTopAnchor(descriptionPane, 40.0);
 		AnchorPane.setBottomAnchor(descriptionPane, 0.0);
 		AnchorPane.setRightAnchor(descriptionPane, 0.0);
 		
@@ -74,10 +76,15 @@ public class GlobalPane extends AnchorPane {
 		// Setup first screen
 		setSelection(INBOX);
 		
-		timeline = new Timeline();
-		timeline.getKeyFrames().add(new KeyFrame(Duration.millis(UPDATE_DURATION), e -> ConversationCache.updateConversations()));
-		timeline.setCycleCount(Animation.INDEFINITE);
-		timeline.play();
+		conversationTimeline = new Timeline();
+		conversationTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(CONVERSATION_UPDATE_DURATION), e -> ConversationCache.updateConversations()));
+		conversationTimeline.setCycleCount(Animation.INDEFINITE);
+		conversationTimeline.play();
+		
+		userTimeline = new Timeline();
+		userTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(USER_UPDATE_DURATION), e -> ConversationCache.updateConversations()));
+		userTimeline.setCycleCount(Animation.INDEFINITE);
+		userTimeline.play();
 	}
 	
 	public void setSelection(int selection) {
@@ -116,9 +123,14 @@ public class GlobalPane extends AnchorPane {
 			instance.selectionPane.updateLayout();
 	}
 	
-	public static void delayUpdate() {
+	public static void delayConversationUpdate() {
 		if (instance != null)
-			instance.timeline.jumpTo(Duration.ZERO);
+			instance.conversationTimeline.jumpTo(Duration.ZERO);
+	}
+	
+	public static void delayUserUpdate() {
+		if (instance != null)
+			instance.userTimeline.jumpTo(Duration.ZERO);
 	}
 	
 	/*// Old Code

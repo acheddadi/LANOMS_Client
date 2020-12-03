@@ -87,14 +87,12 @@ public class UserSettingsLayout extends VBox {
 								e.printStackTrace();
 							}
 						}
-						ClientController.makeUserInfo(UserCache.getCurrentUser(), ta_message.getText(), cb_status.getSelectionModel().getSelectedItem());
+						makeUserInfo(ta_message.getText(), cb_status.getSelectionModel().getSelectedItem());
 					}
 				});
 				Platform.runLater(thread);
 			}
-			else ClientController.makeUserInfo(UserCache.getCurrentUser(), ta_message.getText(), cb_status.getSelectionModel().getSelectedItem());
-			
-			UserCache.updateUserList();
+			else makeUserInfo(ta_message.getText(), cb_status.getSelectionModel().getSelectedItem());
 		});
 		
 		
@@ -135,5 +133,16 @@ public class UserSettingsLayout extends VBox {
 	
 	public void setMessage() {
 		ta_message.setText(UserCache.getUser(UserCache.getCurrentUser()).getMessage());
+	}
+	
+	private void makeUserInfo(String message, String status) {
+		ClientController.makeUserInfo(UserCache.getCurrentUser(), message, status);
+		UserCache.getUser(UserCache.getCurrentUser()).setStatus(status);
+		UserCache.getUser(UserCache.getCurrentUser()).setMessage(message);
+		
+		UserCache.updateUserList();
+		
+		// Reset auto-update timer.
+	    GlobalPane.delayUserUpdate();
 	}
 }
