@@ -16,10 +16,6 @@ public class GlobalPane extends AnchorPane {
 	private NavigationPane navigationPane;
 	private SelectionPane selectionPane;
 	private DescriptionPane descriptionPane;
-	private int currentSelection;
-	private int currentDescription;
-	private Conversation currentConversation;
-	private User currentProfile;
 	
 	private Timeline conversationTimeline;
 	private Timeline userTimeline;
@@ -85,25 +81,19 @@ public class GlobalPane extends AnchorPane {
 	}
 	
 	public void setSelection(int selection) {
-		currentSelection = selection;
 		selectionPane.setLayout(selection);
 	}
 	
 	public void setDescription(int description) {
-		currentDescription = description;
 		descriptionPane.setLayout(description);
 	}
 	
 	public void setDescription(int description, User profile) {
-		currentDescription = description;
-		currentProfile = profile;
 		descriptionPane.setLayout(description);
 		descriptionPane.setProfile(profile);
 	}
 	
 	public void setDescription(int description, Conversation conversation) {
-		currentDescription = description;
-		currentConversation = conversation;
 		descriptionPane.setLayout(description);
 		descriptionPane.setChatLog(conversation);
 	}

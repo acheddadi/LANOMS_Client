@@ -52,11 +52,11 @@ public class ProfileLayout extends VBox {
 			
 			openConversation = new Button("Open new conversation");
 			openConversation.setOnAction(e -> {
-				if (ConversationCache.isBusy()) {
+				if (Lock.isBusy()) {
 					Thread thread = new Thread(new Runnable() {
 						@Override
 						public void run() {
-							while(ConversationCache.isBusy()) {
+							while(Lock.isBusy()) {
 								try {
 									Thread.sleep(500);
 								} catch (InterruptedException e) {

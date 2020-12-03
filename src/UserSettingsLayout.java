@@ -76,11 +76,11 @@ public class UserSettingsLayout extends VBox {
 		
 		
 		bt_submitMessage.setOnAction(e -> {
-			if (UserCache.isBusy()) {
+			if (Lock.isBusy()) {
 				Thread thread = new Thread(new Runnable() {
 					@Override
 					public void run() {
-						while(ConversationCache.isBusy()) {
+						while(Lock.isBusy()) {
 							try {
 								Thread.sleep(500);
 							} catch (InterruptedException e) {

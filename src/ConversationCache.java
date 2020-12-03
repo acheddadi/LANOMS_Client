@@ -105,10 +105,6 @@ public abstract class ConversationCache {
 		
 	}
 	
-	public static boolean isBusy() {
-		return Lock.SEMAPHORE.availablePermits() == 0;
-	}
-	
 	public static void setConversationCount(int count) {
 		conversationCount = count;
 	}
@@ -126,8 +122,10 @@ public abstract class ConversationCache {
 	}
 	
 	public static void updateConversations() {
-		Thread thread = new Thread(new ConversationCacheThread());
-		thread.start();
+		if (Lock.getQueueLength() < 2) {
+			Thread thread = new Thread(new ConversationCacheThread());
+			thread.start();
+		}
 	}
 	
 	public static void addConversation(Conversation conversation) {

@@ -106,13 +106,11 @@ public abstract class UserCache {
 		
 	}
 	
-	public static boolean isBusy() {
-		return Lock.SEMAPHORE.availablePermits() == 0;
-	}
-	
 	public static void updateUserList() {
-		Thread thread = new Thread (new UserCacheThread());
-		thread.start();
+		if (Lock.getQueueLength() < 2) {
+			Thread thread = new Thread (new UserCacheThread());
+			thread.start();
+		}
 	}
 	
 	public static void setUserCount(int userCount) {

@@ -16,12 +16,12 @@ public class ChatInput extends TextField {
 		
 		// Set action
 		this.setOnAction(e -> {
-			if (ConversationCache.isBusy()) {
+			if (Lock.isBusy()) {
 				setEditable(false);
 				Thread thread = new Thread(new Runnable() {
 					@Override
 					public void run() {
-						while(ConversationCache.isBusy()) {
+						while(Lock.isBusy()) {
 							try {
 								Thread.sleep(500);
 							} catch (InterruptedException e) {
