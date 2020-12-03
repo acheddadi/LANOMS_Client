@@ -6,7 +6,6 @@ import javafx.application.Platform;
 public abstract class ConversationCache {
 	private static ArrayList<Conversation> conversations = new ArrayList<Conversation>();
 	
-	private static Semaphore semaphore = new Semaphore(1);
 	private static volatile int conversationCount;
 	private static volatile int messageCount;
 	private static volatile String message;
@@ -18,7 +17,7 @@ public abstract class ConversationCache {
 		
 		private ConversationCacheThread() {
 			try {
-				semaphore.acquire();
+				Lock.SEMAPHORE.acquire();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -101,13 +100,13 @@ public abstract class ConversationCache {
 			}
 				
 			
-			semaphore.release();
+			Lock.SEMAPHORE.release();
 		}
 		
 	}
 	
 	public static boolean isBusy() {
-		return semaphore.availablePermits() == 0;
+		return Lock.SEMAPHORE.availablePermits() == 0;
 	}
 	
 	public static void setConversationCount(int count) {

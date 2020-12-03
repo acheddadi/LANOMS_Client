@@ -1,16 +1,13 @@
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class GlobalPane extends AnchorPane {
 	public static final int INBOX = 0, SEARCH = 1, SETTINGS = 2;
 	public static final int BLANK = 0, CHAT_LOG = 1, PROFILE = 2, WINDOW_SETTINGS = 3, USER_SETTINGS = 4;
-	private static final double CONVERSATION_UPDATE_DURATION = 6000, USER_UPDATE_DURATION = 60000;
+	private static final double CONVERSATION_UPDATE_DURATION = 5000, USER_UPDATE_DURATION = 60000;
 	
 	private final double NAV_WIDTH = 50.0;
 	private final double SEL_WIDTH = 200.0f;

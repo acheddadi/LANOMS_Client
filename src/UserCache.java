@@ -9,7 +9,6 @@ public abstract class UserCache {
 	private static String currentUser;
 	private static ArrayList<User> userList = new ArrayList<User>();
 	
-	private static Semaphore semaphore = new Semaphore(1);
 	private static volatile int userCount;
 	private static volatile String userInfo;
 	private static volatile byte[] userDisplayPicture;
@@ -18,7 +17,7 @@ public abstract class UserCache {
 		private final long SLEEP_TIME = 100, TIMEOUT_TIME = 5000;
 		private UserCacheThread() {
 			try {
-				semaphore.acquire();
+				Lock.SEMAPHORE.acquire();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -102,13 +101,13 @@ public abstract class UserCache {
 				userList.add(user);
 			}
 			
-			semaphore.release();
+			Lock.SEMAPHORE.release();
 		}
 		
 	}
 	
 	public static boolean isBusy() {
-		return semaphore.availablePermits() == 0;
+		return Lock.SEMAPHORE.availablePermits() == 0;
 	}
 	
 	public static void updateUserList() {
