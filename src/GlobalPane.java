@@ -52,15 +52,15 @@ public class GlobalPane extends AnchorPane {
 		
 		// Setup anchors
 		AnchorPane.setLeftAnchor(navigationPane, 0.0);
-		AnchorPane.setTopAnchor(navigationPane, 40.0);
+		AnchorPane.setTopAnchor(navigationPane, 20.0);
 		AnchorPane.setBottomAnchor(navigationPane, 0.0);
 				
 		AnchorPane.setLeftAnchor(selectionPane, NAV_WIDTH);
-		AnchorPane.setTopAnchor(selectionPane, 40.0);
+		AnchorPane.setTopAnchor(selectionPane, 20.0);
 		AnchorPane.setBottomAnchor(selectionPane, 0.0);
 				
 		AnchorPane.setLeftAnchor(descriptionPane, NAV_WIDTH + SEL_WIDTH);
-		AnchorPane.setTopAnchor(descriptionPane, 40.0);
+		AnchorPane.setTopAnchor(descriptionPane, 20.0);
 		AnchorPane.setBottomAnchor(descriptionPane, 0.0);
 		AnchorPane.setRightAnchor(descriptionPane, 0.0);
 		
