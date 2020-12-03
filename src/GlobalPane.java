@@ -82,7 +82,7 @@ public class GlobalPane extends AnchorPane {
 		conversationTimeline.play();
 		
 		userTimeline = new Timeline();
-		userTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(USER_UPDATE_DURATION), e -> ConversationCache.updateConversations()));
+		userTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(USER_UPDATE_DURATION), e -> UserCache.updateUserList()));
 		userTimeline.setCycleCount(Animation.INDEFINITE);
 		userTimeline.play();
 	}
